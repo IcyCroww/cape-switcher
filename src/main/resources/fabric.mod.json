@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "capeswitcher",
+  "version": "${version}",
+  "name": "CapeSwitcher",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/capeswitcher/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "icycrow.capeswitcher.client.CapeswitcherClient"
+    ],
+    "main": [
+      "icycrow.capeswitcher.Capeswitcher"
+    ]
+  },
+  "mixins": [
+    "capeswitcher.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

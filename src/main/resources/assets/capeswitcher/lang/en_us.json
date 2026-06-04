@@ -1,0 +1,11 @@
+{
+  "key.capeswitcher.open_wardrobe": "Open Cape Wardrobe",
+  "category.capeswitcher": "Cape Switcher",
+  "screen.capeswitcher.title": "Cape Wardrobe",
+  "button.capeswitcher.none": "None",
+  "button.capeswitcher.account": "Account Cape",
+  "button.capeswitcher.reload": "Reload",
+  "button.capeswitcher.open_folder": "Open Folder",
+  "button.capeswitcher.done": "Done",
+  "text.capeswitcher.no_capes": "No local capes found. Put PNG files into config/cape-switcher/capes/"
+}
