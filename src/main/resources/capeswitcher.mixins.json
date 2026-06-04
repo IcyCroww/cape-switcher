@@ -1,16 +1,12 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "icycrow.capeswitcher.mixin",
+  "package": "com.pavel.capeswitcher.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-  ],
   "client": [
+    "AbstractClientPlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "overwrites": {
-    "requireAnnotations": true
   }
 }
