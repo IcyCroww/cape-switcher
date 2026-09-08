@@ -53,20 +53,23 @@ public class CapeWardrobeScreen extends Screen {
     private int cardListY, cardListH;
 
     // 3D preview rotation/zoom state
-    private static final float DEFAULT_YAW = 180.0f;
+    private static final float DEFAULT_YAW = 0.0f;
     private static final float DEFAULT_PITCH = 0.0f;
+    private static final float DEFAULT_ROLL = 0.0f;
     private static final float DEFAULT_ZOOM = 1.0f;
     private static final float MIN_ZOOM = 0.5f;
     private static final float MAX_ZOOM = 3.0f;
-    private static final float MAX_PITCH = 45.0f;
     private static final float ROTATION_SENSITIVITY = 0.8f;
     private static final float PITCH_SENSITIVITY = 0.5f;
+    private static final float ROLL_SENSITIVITY = 0.8f;
     private static final float ZOOM_SENSITIVITY = 0.15f;
 
     private float previewYaw = DEFAULT_YAW;
     private float previewPitch = DEFAULT_PITCH;
+    private float previewRoll = DEFAULT_ROLL;
     private float previewZoom = DEFAULT_ZOOM;
     private boolean draggingPreview = false;
+    private boolean rollingPreview = false;
     private double lastMouseX;
     private double lastMouseY;
 
@@ -162,6 +165,7 @@ public class CapeWardrobeScreen extends Screen {
                 button -> {
                     previewYaw = DEFAULT_YAW;
                     previewPitch = DEFAULT_PITCH;
+                    previewRoll = DEFAULT_ROLL;
                     previewZoom = DEFAULT_ZOOM;
                 }
         ).dimensions(leftPanelX + leftPanelW - 44, leftPanelY + leftPanelH - 18, 40, 14).build());
@@ -215,7 +219,7 @@ public class CapeWardrobeScreen extends Screen {
                 context,
                 leftPanelX, leftPanelY,
                 leftPanelX + leftPanelW, leftPanelY + previewH,
-                modelSize, previewYaw, previewPitch, previewZoom,
+                modelSize, previewYaw, previewPitch, previewRoll, previewZoom,
                 client.player
         );
 
@@ -370,9 +374,10 @@ public class CapeWardrobeScreen extends Screen {
             return true;
         }
 
-        // Left click on preview panel = start dragging
-        if (button == 0 && isMouseOverPreview(mouseX, mouseY)) {
-            draggingPreview = true;
+        // Left drag = yaw/pitch, right or middle drag = roll.
+        if (isMouseOverPreview(mouseX, mouseY) && (button == 0 || button == 1 || button == 2)) {
+            draggingPreview = button == 0;
+            rollingPreview = button == 1 || button == 2;
             lastMouseX = mouseX;
             lastMouseY = mouseY;
             return true;
@@ -405,14 +410,23 @@ public class CapeWardrobeScreen extends Screen {
             double dy = mouseY - lastMouseY;
 
             previewYaw += (float) dx * ROTATION_SENSITIVITY;
-            previewPitch += (float) dy * PITCH_SENSITIVITY;
+            previewPitch -= (float) dy * PITCH_SENSITIVITY;
 
-            // Clamp pitch
-            previewPitch = Math.max(-MAX_PITCH, Math.min(MAX_PITCH, previewPitch));
-
-            // Normalize yaw to 0-360
             previewYaw = previewYaw % 360.0f;
             if (previewYaw < 0) previewYaw += 360.0f;
+            previewPitch = previewPitch % 360.0f;
+            if (previewPitch < 0) previewPitch += 360.0f;
+
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
+            return true;
+        }
+        if ((button == 1 || button == 2) && rollingPreview) {
+            double dx = mouseX - lastMouseX;
+
+            previewRoll += (float) dx * ROLL_SENSITIVITY;
+            previewRoll = previewRoll % 360.0f;
+            if (previewRoll < 0) previewRoll += 360.0f;
 
             lastMouseX = mouseX;
             lastMouseY = mouseY;
@@ -427,6 +441,10 @@ public class CapeWardrobeScreen extends Screen {
 
         if (button == 0 && draggingPreview) {
             draggingPreview = false;
+            return true;
+        }
+        if ((button == 1 || button == 2) && rollingPreview) {
+            rollingPreview = false;
             return true;
         }
         return super.mouseReleased(click);
