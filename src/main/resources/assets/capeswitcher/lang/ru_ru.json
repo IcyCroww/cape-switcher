@@ -1,0 +1,12 @@
+{
+  "key.capeswitcher.open_wardrobe": "Открыть гардероб плащей",
+  "category.capeswitcher": "Cape Switcher",
+  "key.category.capeswitcher.main": "Cape Switcher",
+  "screen.capeswitcher.title": "Гардероб плащей",
+  "button.capeswitcher.none": "Без плаща",
+  "button.capeswitcher.account": "Плащ аккаунта",
+  "button.capeswitcher.reload": "Обновить",
+  "button.capeswitcher.open_folder": "Открыть папку",
+  "button.capeswitcher.done": "Готово",
+  "text.capeswitcher.no_capes": "Плащи не найдены. Поместите PNG файлы в config/cape-switcher/capes/"
+}

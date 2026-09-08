@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "capeswitcher",
+  "version": "${version}",
+  "name": "Cape Switcher",
+  "description": "A client-side mod that allows you to choose a local custom cape from a folder.",
+  "authors": [
+    "IcyCrow"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/capeswitcher/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.icycrow.capeswitcher.CapeSwitcherClient"
+    ]
+  },
+  "mixins": [
+    "capeswitcher.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=21"
+  }
+}
